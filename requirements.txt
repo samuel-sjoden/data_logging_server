@@ -1,0 +1,2 @@
+# For writing to excel workbooks
+openpyxl~=3.1.5
