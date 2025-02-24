@@ -38,7 +38,6 @@ def handle_input(server, client_addr, workbook_path):
     :param (socket.socket) server: The server which the client is listening to
     :param (tuple) client_addr: The IP and port number of the client
     :param (str) workbook_path: Path to the feeding log workbook
-    :return:
     """
     wb = load_workbook(workbook_path)
     global input_bucket_cell
@@ -48,9 +47,7 @@ def handle_input(server, client_addr, workbook_path):
     ws[f'C{input_bucket_cell}'] = input_bucket_mass
     input_bucket_cell += 1
     wb.save(workbook_path)
-    print("Before sending response...")
     server.sendto(f"Logged Input Bucket At: {timestamp}".ljust(100, '\0').encode(), client_addr)
-    print("Response sent!")
 
 
 def handle_output(server, client_addr, workbook_path):
@@ -109,7 +106,6 @@ def handle_water(server, client_addr, workbook_path, data):
     :param (tuple) client_addr: The IP and port number of the client
     :param (str) workbook_path: Path to the feeding log workbook
     :param (str) data: Request made by the client
-    :return:
     """
     global water_start_time
     global water_flow_rate
@@ -166,6 +162,7 @@ def handle_datalog(server, client_addr, workbook_path, data):
     ws[f'A{datalog_cell}'] = timestamp
     ws[f'B{datalog_cell}'] = observations
     ws[f'C{datalog_cell}'] = comments
+    datalog_cell += 1
     wb.save(workbook_path)
     server.sendto(f"{observations} Logged Successfully".ljust(100, '\0').encode(), client_addr)
 
