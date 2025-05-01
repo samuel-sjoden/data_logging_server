@@ -88,7 +88,7 @@ def handle_moisture(server, client_addr, workbook_path, data):
     if re.search(r"^Input", data):
         starting_cell = input_moisture_cell
     for cell in range(10):
-        moisture = get_data(server, f"Enter reading {cell + 1}: ".ljust(100, '\0'), client_addr, r"^\.\d{1,3}$",
+        moisture = get_data(server, f"Enter reading {cell + 1}: ".ljust(100, '\0'), client_addr, r"^0?\.\d{1,3}$",
                             f"Invalid Entry. Moisture must start with a decimal. " +
                             f"Please re-enter or send 'c' to cancel".ljust(100, '\0'))
         if moisture is None:

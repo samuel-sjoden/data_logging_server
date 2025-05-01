@@ -28,8 +28,6 @@ def start_service(workbook_path):
         data = data.decode().strip()
         print(f"Received message from {client_addr}: {data}")
 
-        if not data:
-            break
         if re.search(input_pattern, data):
             handle_input(server, client_addr, workbook_path)
         elif re.search(output_pattern, data):
@@ -41,6 +39,5 @@ def start_service(workbook_path):
         elif re.search(datalog_pattern, data):
             handle_datalog(server, client_addr, workbook_path, data)
         else:
-            server.sendto("Invalid Command".encode(), client_addr)
+            server.sendto(f"Invalid Command".ljust(100, '\0').encode(), client_addr)
 
-    server.close()
